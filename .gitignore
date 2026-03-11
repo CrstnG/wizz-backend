@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Alembic (keep versions, ignore tmp)
+alembic/versions/*.pyc
+
+# IDE
+.vscode/
+.idea/
