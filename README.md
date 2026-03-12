@@ -55,13 +55,13 @@ pip install -r requirements.txt
 
 ```bash
 cp .env.example .env
-# Editar .env con tu DATABASE_URL y SECRET_KEY
+# Editar .env con nuevo DATABASE_URL y SECRET_KEY
 ```
 
 ### 4. Tener PostgreSQL corriendo y la base de datos creada
 
 ```bash
-createdb wizzlife   # o créala desde psql / pgAdmin
+createdb wizzlife 
 ```
 
 ### 5. Iniciar el servidor
@@ -82,13 +82,7 @@ docker build -t wizz-backend .
 docker run -p 8000:8000 --env-file .env wizz-backend
 ```
 
->  Requiere que `DATABASE_URL` en `.env` apunte a un PostgreSQL accesible desde el contenedor.
-
-### Con Docker Compose (recomendado para desarrollo local)
-
-```bash
-docker compose up --build
-```
+Requiere que `DATABASE_URL` en `.env` apunte a un PostgreSQL accesible desde el contenedor.
 
 ## Decisiones técnicas relevantes
 
@@ -111,4 +105,4 @@ El endpoint `PATCH /tasks/{id}/` usa `model_dump(exclude_unset=True)` para actua
 - Cada usuario solo puede ver y modificar sus propias tareas
 
 ### Creación de tablas
-Se usa `Base.metadata.create_all()` al inicio de la app para simplicidad. En un proyecto productivo se reemplazaría por migraciones con **Alembic**.
+Se usa `Base.metadata.create_all()` al inicio de la app para simplicidad.
