@@ -1,3 +1,4 @@
+import hashlib
 from datetime import datetime, timedelta, timezone
 
 from jose import JWTError, jwt
@@ -10,12 +11,15 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def hash_password(password: str) -> str:
     """Convierte una contraseña en texto plano a su hash bcrypt."""
-    return pwd_context.hash(password)
+    # Bcrypt only supports up to 72 bytes. Pre-hashing with sha256 fixes length limits.
+    hashed_pass = hashlib.sha256(password.encode()).hexdigest()
+    return pwd_context.hash(hashed_pass)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Compara una contraseña en texto plano contra su hash almacenado."""
-    return pwd_context.verify(plain_password, hashed_password)
+    hashed_pass = hashlib.sha256(plain_password.encode()).hexdigest()
+    return pwd_context.verify(hashed_pass, hashed_password)
 
 
 def create_access_token(data: dict) -> str:
